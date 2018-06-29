@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>practice</title>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/bootstrap.min.css">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+        body{
+            background-image: url("../static/password.jpg");
+        }
+        </style>
+</head>
+<body>
+<input id="maininput" placeholder="输入主密码"><img src="../static/密码.png" onclick="output()">
+<script>
+    function output(){
+        var password=document.getElementById('maininput').value
+        if(password=="936635"){
+            $.ajax({
+                type:"POST",
+            url:"http://127.0.0.1:5000/",
+            data:{},
+            async:false,
+            success:function(result){
+                    console.log("ok")
+            }
+            })
+        }
+        else{
+            alert('wrong')
+        }
+    }
+    </script>
+</body>
+</html>

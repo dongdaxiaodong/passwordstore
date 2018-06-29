@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>indexofpasswordstore</title>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/bootstrap.min.css">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="../static/pyofchina.js"></script>
+    <style>
+        .showpassword{
+            border: 1px solid white;
+            margin-bottom: 10px;
+        }
+        .btn-success{
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+        label{
+                color: antiquewhite;
+        }
+        #title{
+            margin-top: 50px;
+        }
+        .information{
+            margin-top: 30px;
+        }
+        .nameofweb{
+            font-size: 20px;
+            margin-left: 30px;
+        }
+        .labelofbiao{
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        span{
+            color: lightyellow;
+            font-size: 20px;
+        }
+        body{
+
+            background-color: currentColor;
+
+        }
+        .btn-danger{
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        .leftbutton{
+            margin-top: 50px;
+        }
+        .changeinformation{
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+        .adddiv{
+            margin-bottom: 15px;
+        }
+        #loginpassword{
+            margin-top: 200px;
+            margin-left: 370px;
+            border: 1px solid #ccc;
+                padding: 7px 0px;
+                border-radius: 3px;
+                padding-left:5px;
+                -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+                box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+                -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+                -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+                transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s
+        }
+        </style>
+</head>
+<body>
+<div id="login">
+    <input type="password" id="loginpassword" placeholder="输入主密码" id="oText">
+    <button type="button" onclick="getlogin()" class="btn-primary">click</button>
+</div>
+<div class="container" hidden="hidden" id="containerdiv">
+    <div class="row">
+        <div class="col-md-4">
+            <div id="addbutton" class="leftbutton">
+                <img src="../static/添加.png"><span>添加项目</span>
+            </div>
+            <div id="allbutton" class="leftbutton">
+                <img src="../static/项目.png"><span>类别</span>
+            </div>
+            <div id="collectbutton" class="leftbutton">
+                <img src="../static/收藏夹-填充.png"><span>收藏夹</span>
+            </div>
+            <div id="searchbutton" class="leftbutton"><img src="../static/搜索.png"><span>搜索项目</span></div>
+        </div>
+        <div class="col-md-8" id="contentdiv">
+
+        </div>
+    </div>
+</div>
+<script type="text/template" id="allpassword">
+    <div id="allpassword-div" onclick="getdetail(this)">
+        <div class="labelofbiao">
+        <label class="label label-default">replace</label>
+        </div>
+        <div class="showpassword">
+            <img src="#" width="30px" height="30px">
+        <label class="label label-info nameofweb" id="ok">website</label><br>
+        <label class="label label-info">username</label>
+        </div></div>
+</script>
+<script type="text/template" id="allpassword1">
+    <div id="allpassword-div" onclick="getdetail(this)">
+        <div class="showpassword">
+            <img src="#" width="30px" height="30px">
+        <label class="label label-info nameofweb" id="ok">website</label><br>
+        <label class="label label-info">username</label>
+        </div></div>
+</script>
+<script type="text/template" id="search">
+<input type="text" class="btn btn-primary" placeholder="搜索" id="searchinput" style="margin-top: 40px">
+<div id="nodiv" hidden="hidden">
+    <span class="label-default">没有搜索到匹配项目</span>
+</div>
+<div id="yesdiv" hidden="hidden">
+    <div class="yescontentdiv">
+        <img src="%%" width="30px" height="30px"><label>webwebweb</label><br>
+        <label>usernameusernameusername</label>
+    </div>
+</div>
+</script>
+<script type="text/template" id="searchdemo">
+<div class="yescontentdiv" onclick="getitdetail(this)">
+        <img src="%%" width="30px" height="30px"><label>webwebweb</label><br>
+        <label>usernameusernameusername</label>
+    </div>
+</script>
+<script type="text/template" id="addone">
+    <div class="adddiv">
+    <span class="label label-info">输入您即将登录的网站的名称</span>
+    <input type="text" placeholder="网站名称" class="form-control" id="webname">
+    </div>
+    <div class="adddiv">
+    <span class="label label-info">输入用户名或邮箱或手机号</span>
+    <input type="text" placeholder="用户信息" class="form-control" id="username">
+    </div>
+    <div class="adddiv">
+    <span class="label label-info">输入密码</span>
+    <input type="password" placeholder="密码" class="form-control" id="password">
+    </div>
+    <div class="adddiv">
+    <span class="label label-info">再次输入密码</span>
+    <input type="password" placeholder="密码" class="form-control" id="password1">
+    </div>
+    <div class="adddiv">
+    <span class="label label-info">输入登录网站url地址</span>
+    <input type="text" placeholder="url地址" class="form-control" id="weburl">
+    </div>
+    <button type="button" class="btn btn-info" onclick="addsubmit()">提交</button>
+</script>
+
+<script type="text/template" id="detailtemplate">
+    <div id="title">
+        <img src="**" width="30px" height="30px"><label class="label label-success name" id="thename">nameoflabel</label>
+    </div>
+    <div class="information">
+        <label class="label-default">用户名称</label>
+        <label id="userid">useridok</label>
+    </div>
+        <div class="information">
+            <label class="label-default">密码</label>
+            <label id="password">passwordok</label>
+        </div>
+    <div class="information">
+        <label class="label-default">网站</label>
+        <label id="weburl">weburlok</label>
+    </div>
+    <div class="information" onclick="getcollect(this)">
+        <img src="%%" width="30px" height="30px"><label class="label-default collectlabel">收藏夹收藏夹收藏夹</label>
+    </div>
+    <button type="button" class="btn btn-success" onclick="getchange()">编辑</button>
+    <div>
+        <span class="label-default">创建时间</span><label class="label label-default" id="createt">createtimecreatetime</label>
+        <span>最近修改时间</span><label class="label-default" id="changet">changetimechangetime</label>
+    </div>
+    </script>
+<script type="text/template" id="changetemplate">
+    <img src="##" width="30px" height="30px"><input type="text" class="form-control" id="changewebname">
+    <div class="changeinformation">
+        <label class="label-default">用户名称</label><br>
+        <input class="form-control" type="text" id="changeusername">
+    </div>
+    <div class="changeinformation">
+        <label class="label-default">密码</label><br>
+        <input class="form-control" type="text" id="changepassword">
+    </div>
+    <div class="changeinformation">
+        <label class="label-default">网址</label>
+        <input class="form-control" type="text" id="changeweburl">
+    </div>
+    <button type="button" class="btn btn-success" onclick="changeit()">完成</button>
+    <button type="button" class="btn btn-danger" onclick="getdelete()">删除登陆信息</button>
+    </script>
+<script type="text/template" id="collectscript">
+    <div class="collect_template" onclick="getdetail(this)">
+        <div class="showpassword">
+        <img src="###" width="30px" height="30px">
+        <label class="label label-default nameofweb">webnamewebname</label><br>
+        <label class="label label-default">usernameusername</label>
+        </div></div>
+</script>
+<script type="text/javascript">
+    function getitdetail(that){
+        var webname=$(that).children("label")[0].innerText
+        var detailist=getajaxofdetail(webname)
+        var model1=document.getElementById('detailtemplate').innerHTML
+        var model2=model1.replace(/\*\*/i,detailist[4])
+        var model3=model2.replace(/nameoflabel/i,detailist[0])
+        var model4=model3.replace(/useridok/i,detailist[1])
+        var model5=model4.replace(/passwordok/i,detailist[2])
+        var model6=model5.replace(/weburlok/i,detailist[3])
+        var collecturl=(detailist[5]==1)?"../static/收藏夹-填充.png":"../static/收藏夹.png"
+        var model7=model6.replace(/%%/i,collecturl)
+        var collectlabel=""
+        if(detailist[5]==0){
+            collectlabel=nocollect
+        }
+        else{
+            collectlabel=yescollect
+        }
+        var model8=model7.replace(/收藏夹收藏夹收藏夹/i,collectlabel)
+        var model9=model8.replace(/createtimecreatetime/i,detailist[6])
+        var model10=model9.replace(/changetimechangetime/i,detailist[7])
+        document.getElementById('contentdiv').innerHTML=model10
+    }
+    var searchbutton=document.getElementById('searchbutton')
+    searchbutton.onclick=function(){
+        document.getElementById('contentdiv').innerHTML=document.getElementById('search').innerHTML
+        var searchinput=document.getElementById('searchinput')
+        searchinput.oninput=function(){
+            var content=document.getElementById('searchinput').value;
+            var searchlist=getajaxofsearch(content)
+            if(searchlist==[]){
+                document.getElementById('nodiv').hidden=null;
+                document.getElementById('yesdiv').hidden='hidden'
+            }
+            else{
+                var store=""
+                for(var i=0;i<searchlist.length;i+=1){
+                    var searchdemo=document.getElementById('searchdemo').innerHTML;
+
+                    var template1=searchdemo;
+                    var template2=template1.replace(/%%/i,searchlist[i][2])
+                    var template3=template2.replace(/webwebweb/i,searchlist[i][0])
+                    var template4=template3.replace(/usernameusernameusername/i,searchlist[i][1])
+                    store+=template4
+                }
+                document.getElementById('nodiv').hidden="hidden";
+                document.getElementById('yesdiv').hidden=null;
+                document.getElementById('yesdiv').innerHTML=store
+            }
+        }
+    }
+    function getajaxofsearch(content){
+        var returnlist=[]
+        var alldata={
+            content:JSON.stringify(content)
+        }
+        $.ajax({
+            type:"POST",
+            url:"http://127.0.0.1:5000/getsearch",
+            data:alldata,
+            async:false,
+            success:function(result){
+                returnlist=result
+            }
+        })
+        return returnlist
+    }
+    var collectfile=document.getElementById('collectbutton')
+    collectfile.onclick=function(){
+        var collectlist=getajaxofcollectlist()
+        var collectdiv=""
+        for(var i=0;i<collectlist.length;i+=1){
+         var divtem=document.getElementById('collectscript').innerHTML;
+         var template1=divtem.replace(/###/i,collectlist[i][4])
+         var template2=template1.replace(/webnamewebname/i,collectlist[i][0])
+         var template3=template2.replace(/usernameusername/i,collectlist[i][1])
+            collectdiv+=template3
+        }
+        document.getElementById('contentdiv').innerHTML=collectdiv
+    }
+    function getajaxofcollectlist(){
+        var returnlist=[]
+        $.ajax({
+            type:"POST",
+            url:"http://127.0.0.1:5000/getcollectlist",
+            data:{},
+            async:false,
+            success:function(result){
+                returnlist=result
+                alert("成功获取收藏数据")
+            }
+        })
+        return returnlist
+    }
+    function getlogin(){
+        var password=document.getElementById('loginpassword').value
+        if(password==mainpassword){
+            document.getElementById('login').hidden="hidden"
+            document.getElementById('containerdiv').hidden=null
+        }
+        else{
+            alert("wrong password")
+        }
+    }
+    var mainpassword="936635"
+    var nocollect="添加到收藏夹"
+    var yescollect="从收藏夹中删除"
+    //todo--下面三个函数以及创建和修改时间
+    function changeit(){
+        var name=document.getElementById('changewebname').name
+        var newwebname=document.getElementById('changewebname').value
+        var newusername=document.getElementById('changeusername').value
+        var newpassword=document.getElementById('changepassword').value
+        var newweburl=document.getElementById('changeweburl').value
+        var alllist={
+            name:JSON.stringify(name),
+            newwebname:JSON.stringify(newwebname),
+            newusername:JSON.stringify(newusername),
+            newpassword:JSON.stringify(newpassword),
+            newweburl:JSON.stringify(newweburl)
+        }
+        getajaxofchangeone(alllist)
+    }
+    function getajaxofchangeone(changelist){
+        var alldata=changelist
+        //todo--也要改变收藏夹中的
+        $.ajax({
+            type:"POST",
+            url:"http://127.0.0.1:5000/getitchange",
+            data:alldata,
+            async:false,
+            success:function(result){
+                alert("成功修改数据")
+            }
+        })
+    }
+    function getdelete(){
+        var webname=document.getElementById('changewebname').value
+        //todo--是否考虑把收藏夹中的也删除了
+        getajaxofdelete(webname)
+    }
+    function getajaxofdelete(webname){
+        var alldata={
+            webname:JSON.stringify(webname)
+        }
+        $.ajax({
+            type:"POST",
+            url:"http://127.0.0.1:5000/getdelete",
+            data:alldata,
+            async:false,
+            success:function(result){
+                alert("成功删除数据")
+            }
+        })
+    }
+    function getchange(){
+        var nameofweb=document.getElementById('thename').innerText
+        var detailist=getajaxofdetail(nameofweb)
+        var model1=document.getElementById('changetemplate').innerHTML
+        var model2=model1.replace(/##/i,detailist[4])
+        document.getElementById('contentdiv').innerHTML=model2
+        document.getElementById('changewebname').value=detailist[0]
+        document.getElementById('changeusername').value=detailist[1]
+        document.getElementById('changepassword').value=detailist[2]
+        document.getElementById('changeweburl').value=detailist[3]
+        document.getElementById('changewebname').name=detailist[0]
+
+    }
+    function getcollect(that){
+        var name=document.getElementById('thename').innerText
+        var collectlabel=$(that).children("label.collectlabel")[0].innerText
+        var flag=(collectlabel==nocollect)?"1":"0"
+        getajaxofcollect(name,flag)
+    }
+    function getajaxofcollect(webname,flag){
+        var alldata={
+            webname:JSON.stringify(webname),
+            flag:JSON.stringify(flag)
+        }
+        $.ajax({
+            type:"POST",
+            url:"http://127.0.0.1:5000/getcollect",
+            data:alldata,
+            async:false,
+            success:function(result){
+                if(flag=="1"){
+                alert("成功加入收藏夹")
+                }
+                else{
+                    alert("成功从收藏夹中删除")
+                }
+            }
+        })
+    }
+         var allbutton=document.getElementById('allbutton')
+    allbutton.onclick=function(){
+        var allpasswordlist=getallpassword()
+        for(var i=0;i<allpasswordlist.length;i+=1){
+            var demo=/[a-zA-Z]/i
+            var flag=demo.test(allpasswordlist[i][0])
+            if(flag){
+            allpasswordlist[i].push(allpasswordlist[i][0].substring(0,1).toUpperCase())
+            }
+            else{
+            allpasswordlist[i].push(Pinyin.getshort(allpasswordlist[i][0].substring(0,1)))
+            }
+        }
+        var passwordslist=[]
+        var replacelist=[]
+        var countoftypes=0
+        for(var i=0;i<allpasswordlist.length;i+=1){
+            if(replacelist.indexOf(allpasswordlist[i][3])<0){
+                countoftypes+=1
+                replacelist.push(allpasswordlist[i][3])
+            }
+            passwordslist.push({name:allpasswordlist[i][0],userid:allpasswordlist[i][1],iconurl:allpasswordlist[i][2],index:allpasswordlist[i][3]})
+        }
+        passwordslist.sort(sortbyletter)
+        var collectlist=[]
+        for(var i=0;i<countoftypes;i+=1){
+            collectlist[i]=[]
+        }
+        var length=0
+        for(var i=0;i<collectlist.length;i+=1){
+            for(var k=length;k<passwordslist.length-1;k+=1){
+                length+=1
+                collectlist[i].push(passwordslist[k])
+                if(passwordslist[k].index!=passwordslist[k+1].index){
+                    break
+                }
+            }
+        }
+        collectlist[collectlist.length-1].push(passwordslist[passwordslist.length-1])
+        //todo--加上div
+        var allpasswordinnerhtml=""
+        for(var i=0;i<collectlist.length;i+=1){
+            for (var k=0;k<collectlist[i].length;k+=1){
+                var website=collectlist[i][k].name
+                var userid=collectlist[i][k].userid
+                var icourl=collectlist[i][k].iconurl
+                if(k==0){
+                var model1=document.getElementById('allpassword').innerHTML
+                var model2=model1.replace(/replace/i,collectlist[i][0].index)
+                var model3=model2.replace(/#/i,icourl)
+                var model4=model3.replace(/website/i,website)
+                var model5=model4.replace(/username/i,userid)
+                }
+                else{
+                    var model2=document.getElementById('allpassword1').innerHTML
+                    var model3=model2.replace(/#/i,icourl)
+                    var model4=model3.replace(/website/i,website)
+                    var model5=model4.replace(/username/i,userid)
+                }
+                allpasswordinnerhtml+=model5
+            }
+        }
+        document.getElementById('contentdiv').innerHTML=allpasswordinnerhtml
+    }
+//        var webname=$(that).children("label.nameofweb")[0].innerText
+//.children("label.nameofweb")[0].innerText
+    //todo--收藏变换
+    function getdetail(that){
+                var thename=$(that).children("div.showpassword")[0]
+        var webname=$(thename).children("label.nameofweb")[0].innerText
+        console.log(webname)
+        var detailist=getajaxofdetail(webname)
+        var model1=document.getElementById('detailtemplate').innerHTML
+        var model2=model1.replace(/\*\*/i,detailist[4])
+        var model3=model2.replace(/nameoflabel/i,detailist[0])
+        var model4=model3.replace(/useridok/i,detailist[1])
+        var model5=model4.replace(/passwordok/i,detailist[2])
+        var model6=model5.replace(/weburlok/i,detailist[3])
+        var collecturl=(detailist[5]==1)?"../static/收藏夹-填充.png":"../static/收藏夹.png"
+        var model7=model6.replace(/%%/i,collecturl)
+        var collectlabel=""
+        if(detailist[5]==0){
+            collectlabel=nocollect
+        }
+        else{
+            collectlabel=yescollect
+        }
+        var model8=model7.replace(/收藏夹收藏夹收藏夹/i,collectlabel)
+        var model9=model8.replace(/createtimecreatetime/i,detailist[6])
+        var model10=model9.replace(/changetimechangetime/i,detailist[7])
+        document.getElementById('contentdiv').innerHTML=model10
+    }
+    function getajaxofdetail(webname){
+        var alldata={
+            mywebname:JSON.stringify(webname)
+        }
+        var detaillist=[]
+        $.ajax({
+            type:"POST",
+            url:"http://127.0.0.1:5000/getdetail",
+            data:alldata,
+            async:false,
+            success:function(result){
+                alert("成功获取详细数据")
+                detaillist=result
+            }
+        })
+        return detaillist
+    }
+    function sortbyletter(obj1,obj2){
+        var letter1=obj1.index
+        var letter2=obj2.index
+        if(letter1<letter2){
+            return -1
+        }
+        else if(letter2<letter1){
+            return 1
+        }
+        else{
+            return 0
+        }
+    }
+    function getallpassword(){
+        var returnlist=[]
+        $.ajax({
+            type:"POST",
+            url:"http://127.0.0.1:5000/getallpassword",
+            data:{},
+            async:false,
+            success:function(result){
+                alert("成功获取")
+                returnlist=result
+            }
+        })
+        return returnlist
+    }
+        var addbutton=document.getElementById('addbutton')
+    addbutton.onclick=function(){
+        var addscript=document.getElementById('addone')
+        var contentdiv=document.getElementById('contentdiv')
+        contentdiv.innerHTML=addscript.innerHTML
+    }
+    function addsubmit(){
+        var webname=document.getElementById('webname').value
+        var username=document.getElementById('username').value
+        var password=document.getElementById('password').value
+        var password1=document.getElementById('password1').value
+        var weburl=document.getElementById('weburl').value
+        if(webname==""||username==""||password==""||password1==""){
+            alert("请将信息填写完整")
+        }
+        else if(password!=password1){
+            alert("前后密码不一致")
+        }
+        else{
+            var add_return_array=sendaddinformation(webname,username,password,weburl)
+        }
+    }
+    function sendaddinformation(webname,username,password,weburl){
+        var alldata={
+            webname:JSON.stringify(webname),
+            username:JSON.stringify(username),
+            password:JSON.stringify(password),
+            weburl:JSON.stringify(weburl),
+        }
+        returnlist=[]
+        $.ajax({
+            type:"POST",
+            url:"http://127.0.0.1:5000/addpassword",
+            data:alldata,
+            async:false,
+            success:function(result){
+                alert("添加成功")
+                resultlist=result
+            }
+        })
+    }
+</script>
+</body>
+</html>
